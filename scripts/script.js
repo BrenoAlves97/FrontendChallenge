@@ -23,7 +23,7 @@ addTeamBtn.addEventListener("click", (e) => {
     const messageError = document.querySelector(".message-error");
 
     if (teamName.length > 0) {
-        if (isInputValid && teamName.length < 8) {
+        if (isInputValid && teamName.length < 10) {
             const nameOfTeamValue = teamList[index].children[0].lastElementChild;
             const powerOfTeamValue = teamList[index].children[1].lastElementChild;
 
