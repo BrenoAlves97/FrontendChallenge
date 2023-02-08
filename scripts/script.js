@@ -36,7 +36,8 @@ addTeamBtn.addEventListener("click", (e) => {
             console.log("Index: ", index);
             index++;
 
-            teams.push({ teamName, teamPower });
+            teams.push({ teamName, teamPower, trophies: 0 });
+
             refreshInput();
 
             if (index >= 4) {
@@ -64,6 +65,8 @@ addTeamBtn.addEventListener("click", (e) => {
         }, 3000);
         refreshInput();
     }
+
+    fillOutTeamsTrophies(teams);
 });
 
 function refreshInput() {
@@ -82,6 +85,25 @@ function randomPowerValue() {
     }
 }
 
+function fillOutTeamsTrophies(teamsObject) {
+    const allTrophiesOfTheTeam = document.querySelectorAll(".team-trophy-info");
+
+    for (let i = 0; i < teams.length; i++) {
+        allTrophiesOfTheTeam[i].children[1].textContent = teams[i].trophies;
+    }
+}
+
+function addingTrophies(winner) {
+    console.log(winner);
+
+    for (let i = 0; i < teams.length; i++) {
+        if (teams[i].teamName === winner) {
+            teams[i].trophies++;
+        }
+        fillOutTeamsTrophies(teams);
+    }
+}
+
 function fillOutField() {
     const firstStageAllItems = document.querySelectorAll(".first-stage .box-items");
 
@@ -93,15 +115,12 @@ function fillOutField() {
     for (let i = 0; i < allMatches.length; i++) {
         allMatches[i].firstElementChild.textContent = teams[i].teamName;
     }
-
     secondStageMatch();
 }
 
 function secondStageMatch() {
     const secondStageItems = document.querySelectorAll(".second-stage .item");
-
-    console.log(teams);
-
+    // console.log(teams);
     let firstMatchCheck;
     let firstResult = teams[0];
 
@@ -111,8 +130,7 @@ function secondStageMatch() {
         firstMatchCheck = teams[1];
     }
 
-    console.log("First winner", firstMatchCheck);
-
+    // console.log("First winner", firstMatchCheck);
     let secondResult = teams[2];
     let secondMatchCheck;
 
@@ -122,13 +140,11 @@ function secondStageMatch() {
         secondMatchCheck = teams[3];
     }
 
-    console.log("Second winner: ", secondMatchCheck);
-
+    // console.log("Second winner: ", secondMatchCheck);
     const firstTeamClassified = secondStageItems[0].children;
     const secondTeamClassified = secondStageItems[1].children;
 
-    console.log("Places: ", firstTeamClassified, secondTeamClassified);
-
+    // console.log("Places: ", firstTeamClassified, secondTeamClassified);
     setTimeout(() => {
         firstTeamClassified[0].textContent = firstMatchCheck.teamName;
         secondTeamClassified[0].textContent = secondMatchCheck.teamName;
@@ -139,10 +155,9 @@ function secondStageMatch() {
 
 function teamWinner(firstFinalist, secondFinalist) {
     const winnerBox = document.querySelector(".final-stage .item");
+    // console.log("Testando finalistas: ", firstFinalist, secondFinalist);
 
     let winner;
-
-    console.log("Testando finalistas: ", firstFinalist, secondFinalist);
 
     if (firstFinalist.teamPower > secondFinalist.teamPower) {
         winner = firstFinalist;
@@ -152,6 +167,7 @@ function teamWinner(firstFinalist, secondFinalist) {
 
     setTimeout(() => {
         winnerBox.firstElementChild.textContent = winner.teamName;
+        addingTrophies(winner.teamName);
     }, 3000);
 }
 
