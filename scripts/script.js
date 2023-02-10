@@ -2,6 +2,8 @@ const addTeamBtn = document.querySelector(".btn-add");
 const inputEl = document.querySelector("#team-name");
 const restartBtn = document.querySelector(".restart-btn");
 
+const openModal = document.querySelector(".modal-message");
+
 const teamList = document.querySelectorAll(".team-listed");
 
 const teams = [];
@@ -33,11 +35,8 @@ addTeamBtn.addEventListener("click", (e) => {
             powerOfTeamValue.textContent = parseInt(randomValueOfPower);
             let teamPower = powerOfTeamValue.textContent;
 
-            console.log("Index: ", index);
             index++;
-
             teams.push({ teamName, teamPower, trophies: 0 });
-
             refreshInput();
 
             if (index >= 4) {
@@ -120,7 +119,7 @@ function fillOutField() {
 
 function secondStageMatch() {
     const secondStageItems = document.querySelectorAll(".second-stage .item");
-    // console.log(teams);
+
     let firstMatchCheck;
     let firstResult = teams[0];
 
@@ -130,7 +129,6 @@ function secondStageMatch() {
         firstMatchCheck = teams[1];
     }
 
-    // console.log("First winner", firstMatchCheck);
     let secondResult = teams[2];
     let secondMatchCheck;
 
@@ -140,11 +138,9 @@ function secondStageMatch() {
         secondMatchCheck = teams[3];
     }
 
-    // console.log("Second winner: ", secondMatchCheck);
     const firstTeamClassified = secondStageItems[0].children;
     const secondTeamClassified = secondStageItems[1].children;
 
-    // console.log("Places: ", firstTeamClassified, secondTeamClassified);
     setTimeout(() => {
         firstTeamClassified[0].textContent = firstMatchCheck.teamName;
         secondTeamClassified[0].textContent = secondMatchCheck.teamName;
@@ -168,6 +164,14 @@ function teamWinner(firstFinalist, secondFinalist) {
     setTimeout(() => {
         winnerBox.firstElementChild.textContent = winner.teamName;
         addingTrophies(winner.teamName);
+
+        for (let i = 0; i < teams.length; i++) {
+            if (teams[i].trophies === 5) {
+                openModal.classList.remove("hide");
+                modalWithWinnerMessage(teams[i].teamName);
+                console.log(teams[i].teamName);
+            }
+        }
     }, 3000);
 }
 
@@ -192,4 +196,24 @@ function cleanAllField() {
 
     randomPowerValue();
     setTimeout(fillOutField, 1500);
+}
+
+function modalWithWinnerMessage(teamWinner) {
+    const openModal = document.querySelector(".modal-message");
+    const modalTitle = openModal.querySelector(".modal-message-title");
+    const btnRestartAllGame = openModal.querySelector(".restart-game");
+    const closeIcon = openModal.querySelector(".modal-message i");
+
+    closeIcon.addEventListener("click", () => openModal.classList.add("hide"));
+
+    modalTitle.textContent = `O time vencedor foi: ${teamWinner}`;
+
+    btnRestartAllGame.addEventListener("click", () => {
+        const removeAllTeamsCards = document.querySelectorAll(".list-of-teams .team-listed");
+
+        for (let i = 0; i <= 3; i++) {
+            removeAllTeamsCards[i].remove();
+        }
+        //code to do...
+    });
 }

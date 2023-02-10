@@ -8,6 +8,7 @@
 }
 
 body {
+    position: relative;
     width: 100%;
     min-height: 100vh;
     padding: 1rem 0 2rem;
@@ -91,7 +92,8 @@ body {
 }
 
 .register-teams-container .form-register .btn-add,
-.register-teams-container .form-register .btn-random-number {
+.register-teams-container .form-register .btn-random-number,
+.modal-message button {
     padding: 0.6rem 0.8rem;
     border: 3px solid transparent;
     border-radius: 0.3rem;
@@ -102,14 +104,16 @@ body {
 
 .register-teams-container .form-register input:focus,
 .register-teams-container .form-register .btn-add:hover,
-.register-teams-container .form-register .btn-random-number:hover {
+.register-teams-container .form-register .btn-random-number:hover,
+.modal-message button:hover {
     transition: 0.3s;
     border-bottom-color: #101010;
     opacity: 1;
 }
 
 .register-teams-container .form-register .btn-add:hover,
-.register-teams-container .form-register .btn-random-number:hover {
+.register-teams-container .form-register .btn-random-number:hover,
+.modal-message button:hover {
     border-color: #101010;
 }
 
@@ -159,6 +163,7 @@ body {
 
 .list-of-teams .team-listed .team-power-info p {
     text-decoration: line-through;
+    filter: blur(2px);
 }
 
 .list-of-teams .team-listed .team-power-info i {
@@ -224,4 +229,33 @@ body {
 .field-container .final-stage i {
     background: #ddd;
     padding: 0.7rem 0.9rem;
+}
+
+/* modal message */
+
+.modal-message {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    padding: 2rem;
+    position: fixed;
+    top: 35%;
+    right: 35.2%;
+    background: #2c404bcf;
+    color: #ffff;
+    border-radius: 0.3rem;
+}
+
+.modal-message h2 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.modal-message i {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
 }
